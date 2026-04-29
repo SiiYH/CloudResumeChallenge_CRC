@@ -1,0 +1,478 @@
+/* ================================
+   CSS VARIABLES — change these to
+   restyle the whole site instantly
+   ================================ */
+:root {
+  --color-bg: #fafaf8;
+  --color-surface: #f0efe9;
+  --color-text: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-accent: #1a1a1a;
+  --color-accent-hover: #3d3d3d;
+  --color-border: #e2e2dc;
+
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --max-width: 1100px;
+  --radius: 4px;
+  --transition: 0.25s ease;
+}
+
+/* ================================
+   RESET — browser default styles
+   are inconsistent, so we clear them
+   ================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* enables smooth scrolling for anchor links */
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ================================
+   REUSABLE UTILITIES
+   ================================ */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* narrower container for centered content like the contact form */
+.container-narrow {
+  max-width: 640px;
+}
+
+.section {
+  padding: 100px 0;
+}
+
+/* alternating background to visually separate sections */
+.section-alt {
+  background-color: var(--color-surface);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem); /* clamp = responsive font size */
+  margin-bottom: 3rem;
+  letter-spacing: -0.5px;
+}
+
+/* ================================
+   BUTTONS
+   ================================ */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background: var(--color-accent);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.btn:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.btn-outline:hover {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.82rem;
+}
+
+.btn-full {
+  width: 100%;
+  text-align: center;
+}
+
+/* ================================
+   NAVBAR
+   ================================ */
+.navbar {
+  position: fixed;          /* sticks to top while scrolling */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: rgba(250, 250, 248, 0.85);
+  backdrop-filter: blur(12px);  /* frosted glass effect */
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+/* JS adds this class when user scrolls down */
+.navbar.scrolled {
+  border-color: var(--color-border);
+  box-shadow: 0 1px 20px rgba(0,0,0,0.05);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+  transition: color var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--color-text);
+}
+
+/* hamburger button — hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* animate hamburger into X when active */
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ================================
+   HERO SECTION
+   ================================ */
+.me {
+  min-height: 100vh;          /* fills the whole screen */
+  display: flex;
+  align-items: center;
+  padding: 0 2.5rem;
+  padding-top: 80px;          /* offset for fixed navbar */
+}
+
+.me-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.me-greeting {
+  font-size: 1.1rem;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+  /* fade-up animation (defined below) */
+  animation: fadeUp 0.7s ease both;
+}
+
+.me-name {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 1rem;
+  animation: fadeUp 0.7s ease 0.1s both; /* 0.1s delay = staggered */
+}
+
+.me-tagline {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  color: var(--color-muted);
+  margin-bottom: 2.5rem;
+  max-width: 480px;
+  animation: fadeUp 0.7s ease 0.2s both;
+}
+
+.me .btn {
+  animation: fadeUp 0.7s ease 0.3s both;
+}
+
+/* ================================
+   ABOUT SECTION
+   ================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-img-placeholder {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--color-muted);
+}
+
+.about-text p {
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+
+.about-text .btn {
+  margin-top: 0.75rem;
+}
+
+/* ================================
+   SKILLS SECTION
+   ================================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.skill-card {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.skill-card:hover {
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+}
+
+/* ================================
+   PROJECTS SECTION
+   ================================ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+  transform: translateY(-3px);
+}
+
+.project-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.project-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-card p {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ================================
+   CONTACT SECTION
+   ================================ */
+.contact-intro {
+  color: var(--color-muted);
+  margin-bottom: 2.5rem;
+  font-size: 1.05rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  transition: border-color var(--transition);
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-text);  /* highlights on focus */
+}
+
+.form-status {
+  font-size: 0.9rem;
+  text-align: center;
+  min-height: 1.4rem;
+}
+
+.form-status.success { color: #2d7a4f; }
+.form-status.error   { color: #c0392b; }
+
+/* ================================
+   FOOTER
+   ================================ */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+}
+
+#visitor-count {
+  font-weight: 600;
+  color: #555;
+}
+
+/* ================================
+   ANIMATIONS
+   ================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* class added by JS to animate sections into view */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================
+   RESPONSIVE — MOBILE
+   ================================ */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;  /* show hamburger on mobile */
+  }
+
+  /* nav links become a dropdown on mobile */
+  .nav-links {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: var(--color-bg);
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    transform: translateY(-120%);  /* hidden above screen */
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links.open {
+    transform: translateY(0);    /* slides down when open */
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .about-img-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}

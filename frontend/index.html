@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sii Yew Hei</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">SYH.</div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    </nav>
+
+    <!-- Me -->
+    <section class="me" id="home">
+        <div class="me-content">
+            <p class="me-greeting"> Hi, I'm</p>
+            <h1 class="me-name"> Sii Yew Hei.</h1>
+            <p class="me-tagline">From ERP logic to cloud architecture — I build systems that scale.</p>
+            <a href="#projects" class="btn"> View My Work </a>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title"> Who am I?</h2>
+            <div class="about-grid">
+                <div class="about-img-wrapper">
+                    <div class="about-img-placeholder">SYH</div>
+                </div>
+                <div class="about-text">
+                    <p>Started with ERP and business logic. Now I architect cloud systems, automate deployments, and
+                        build the pipelines that keep everything running. Azure-certified, hands-on with Terraform and
+                        DevOps — and always moving toward the next layer of the stack.</p>
+                    <p>When I'm not writing code, you'll find me on a hiking trail, hunting down a good meal, or
+                        tinkering with my personal Azure projects. I'm currently open to cloud engineering and DevOps
+                        opportunities.</p>
+                    <a href="#contact" class="btn"> Get in Touch </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section section-alt" id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills that I Bring to the Table</h2>
+            <div class="skill-grid">
+                <div class="skill-card">Azure Cloud (Functions, App Services, Vnet, Subnet, etc.)</div>
+                <div class="skill-card">Terraform</div>
+                <div class="skill-card">DevOps</div>
+                <div class="skill-card">Git & GitHub</div>
+                <div class="skill-card">C#</div>
+                <div class="skill-card">Python</div>
+                <div class="skill-card">Object-Oriented Design</div>
+                <div class="skill-card">Event-Driven Programming</div>
+                <div class="skill-card">API Integration</div>
+                <div class="skill-card">Extension-based Architecture</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section title">Projects</h2>
+            <div class="project"></div>
+            <div class="projects-grids">
+
+                <div class="project-card">
+                    <div class="project-tag">Project 1</div>
+                    <h3>Example project name</h3>
+                    <p>Description of the project goes here.</p>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-sm">Live Demo</a>
+                        <a href="#" class="btn btn-sm btn-outline">Source Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section section-alt" id="contact">
+        <div class="container container-narrow">
+            <h2 class="section-title">Get in Touch</h2>
+            <p>I'm currently open to cloud engineering and DevOps opportunities. Feel free to reach out if you'd like to
+                connect or discuss potential collaborations.</p>
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Your Name" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Your Email" required />
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="5" placeholder="Tell me anything!" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-full">Send Message</button>
+                <p class="form-status" id="form-status"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Visitor Count: <span id="visitor-count">...</span></p>
+        <p>&copy; 2026 Sii Yew Hei.</p>
+    </footer>
+    <script src="js/counter.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
