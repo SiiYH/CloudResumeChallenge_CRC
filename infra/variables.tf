@@ -3,6 +3,25 @@ variable "subscription_id"{
   type = string
   sensitive = true
 }
+
+variable "client_id" {
+  description = "client id"
+  type = string
+  sensitive = true
+}
+
+variable "client_secret" {
+  description = "client_secret"
+  type = string
+  sensitive = true
+}
+
+variable "tenand_id" {
+  description = "tenant id"
+  type = string
+  sensitive = true
+}
+
 variable "environment" {
   description = "current environment to deploy resources"
   type = string
@@ -25,4 +44,3 @@ variable "swa_location" {
   type = string
   default = "eastasia"
 }
-

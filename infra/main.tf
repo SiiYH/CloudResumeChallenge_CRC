@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "rg" {
 resource "azurerm_storage_account" "resume" {
   name = "stresume${var.unique_suffix}"
   resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg
+  location = azurerm_resource_group.rg.location
 
   account_tier = "Standard"
   account_replication_type = "LRS"
@@ -16,24 +16,43 @@ resource "azurerm_storage_account" "resume" {
   https_traffic_only_enabled = true
 }
 
-resource "azurerm_storage_account_static_website" "resume" {
+/* resource "azurerm_storage_account_static_website" "resume" {
   storage_account_id = azurerm_storage_account.resume.id
   index_document = "index.html"
   error_404_document = "error.html"
-}
+} */
 
 resource "azurerm_storage_table" "vistor_counter" {
-  name = "vistor_counter"
+  name = "visitorCounter"
   storage_account_name = azurerm_storage_account.resume.name
 }
 
 resource "azurerm_static_web_app" "resume" {
   name = "swa-resume-${var.unique_suffix}"
   resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
+  location = var.swa_location
   sku_size = "Free"
   sku_tier = "Free"
 }
+
+/* resource "azurerm_storage_blob" "frontend" {
+  for_each = local.frontend_files
+
+  name = each.value
+  storage_account_name = azurerm_storage_account.resume.name
+  storage_container_name = "$web"
+  type = "Block"
+  source = "/frontend/${each.value}"
+  content_md5 = filemd5("/frontend/${each.value}")
+  content_type = lookup({
+    "html" = "text/html"
+    "css" = "text/css"
+    "js" = "application/javascript"
+    "png" = "image/png"
+    "jpg" = "image/jpeg"
+    "ico" = "image/x-icon"
+  }, split(".", each.value)[length(split(".", each.value))-1], "application/octet-stream" )
+} */
 
 ///creating azure function app to host the api for visitor counter, and link it to the storage table
 resource "azurerm_service_plan" "resume" {
@@ -62,6 +81,7 @@ resource "azurerm_linux_function_app" "resume" {
       allowed_origins = [
         "https://${azurerm_static_web_app.resume.default_host_name}"
       ]
+      support_credentials = false
     }
   }
 
