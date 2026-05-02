@@ -1,0 +1,24 @@
+name: Terraform Infrastructure
+
+"on":
+    push:
+        branches:
+          - main
+        paths:
+          - 'infra/**'
+env:
+    TF_Version: '1.15.0'
+    WORKING_DIR: './infra'
+
+jobs:
+  terraform:
+    name: Terraform Plan & Apply
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        
