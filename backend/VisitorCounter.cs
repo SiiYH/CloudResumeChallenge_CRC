@@ -11,7 +11,7 @@ public class VisitorEntity : ITableEntity
 {
     public string PartitionKey { get; set; } = "resume";
     public string RowKey { get; set; } = "visitorCount";
-    public int count { get; set; } = 0;
+    public int Count { get; set; } = 0;
     public ETag ETag { get; set; } = ETag.All;
     public DateTimeOffset? Timestamp { get; set; }
 }
@@ -22,7 +22,7 @@ public class VisitorCounter
 
     public VisitorCounter(ILogger<VisitorCounter> logger)
     {
-        logger = _logger;
+        _logger = logger;
     }
 
     [Function("visitorCounter")]
@@ -32,7 +32,7 @@ public class VisitorCounter
     {
         _logger.LogInformation("Visitor Counter triggered.");
 
-        var accountName = Environment.GetEnvironmentVariable("STORAGE_ACCOUNT_NAME");
+        var accountName = Environment.GetEnvironmentVariable("STORAGE_ACCOUNT_NAME")!;
         var accountKey = Environment.GetEnvironmentVariable("STORAGE_ACCOUNT_KEY");
         var tableName = Environment.GetEnvironmentVariable("TABLE_NAME");
 
@@ -42,5 +42,26 @@ public class VisitorCounter
             tableName,
             credential
         );
+
+        await client.CreateIfNotExistsAsync();
+        VisitorEntity entity;
+
+        try
+        {
+            var result = await client.GetEntityAsync<VisitorEntity>("resume", "visitorCount");
+            entity = result.Value;
+        } catch (RequestFailedException ex) when (ex.Status == 404)
+        {
+            //first visitor
+            entity = new VisitorEntity();
+        }
+
+        entity.Count += 1;
+        await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+
+        _logger.LogInformation("Visitor count update to {Count}", entity.Count);
+
+        return new OkObjectResult(new {count = entity.Count});
+        
     }
 }

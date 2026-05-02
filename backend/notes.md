@@ -28,3 +28,23 @@ dotnet build
 dotnet test tests/
 
 dotnet add package Azure.Data.Tables
+
+dotnet nuget locals all --clear
+
+# Root cause
+backend.csproj was implicitly compiling all .cs files under backend, including VisitorCounter.cs.
+That test file used xunit, but backend.csproj did not reference the xunit package, so build failed.
+VisitorCounter.cs also had a real bug:
+logger = _logger; should be _logger = logger;
+Program.cs had an invalid builder.Services statement after commenting out Application Insights setup.
+
+# What changed
+backend.csproj
+Added Compile Remove="tests\**\*.cs" so test files are excluded from the backend function app build.
+VisitorCounter.cs
+Fixed the logger constructor assignment to _logger = logger;
+Program.cs
+Removed the leftover invalid builder.Services statement.
+
+# Result
+dotnet build in backend now succeeds.
