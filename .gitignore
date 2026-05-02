@@ -264,3 +264,7 @@ __pycache__/
 *.pyc
 
 infra/terraform.tfvars
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
