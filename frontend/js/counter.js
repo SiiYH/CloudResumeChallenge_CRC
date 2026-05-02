@@ -1,4 +1,4 @@
-const FUNCTION_URL = 'https://your-function-url.azurewebsites.net/api/Counter';
+const FUNCTION_URL = 'https://alfa-resume-sii001.azurewebsites.net/api/Counter';
 
 async function updateVisitorCount() {
     try{
