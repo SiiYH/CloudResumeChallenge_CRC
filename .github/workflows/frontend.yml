@@ -1,6 +1,6 @@
 name: Frontend - Deploy to Static Web Apps
 
-on:
+"on":
     push:
         branches: [main]
         paths: 
