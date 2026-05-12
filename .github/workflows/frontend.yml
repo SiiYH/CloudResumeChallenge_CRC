@@ -23,7 +23,7 @@ jobs:
               with:
                 azure_static_web_apps_api_token: ${{ secrets.SWA_DEPLOYMENT_TOKEN }}
                 repo_token: ${{ secrets.GITHUB_TOKEN }}
-                actions: upload
+                action: ${{ github.event_name == 'pull_request' && 'close' || 'upload' }}  # ← dynamic
                 app_location: '/frontend'
                 skip_api_build: true
                 output_location: ''
